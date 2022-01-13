@@ -19,18 +19,19 @@
       "ecmaFeatures": {
           "jsx": true
       },
-      "ecmaVersion": 12,
+      "ecmaVersion": 13,
       "sourceType": "module"
   },
   "plugins": [
-      "react","react-hooks",
+      "react","react-hooks"
   ],
   "rules": {
   "react-hooks/rules-of-hooks": "error",
   "react-hooks/exhaustive-deps": "warn",
   "react/prop-types":"off",
-  "react/react-in-jsx-scope":"off",
+  "react/react-in-jsx-scope":"off"
 
 
   }
 }
+

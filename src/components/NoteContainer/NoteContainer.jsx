@@ -1,4 +1,5 @@
 import {
+  useDisclosure,
   Box,
   Flex,
   FormControl,
@@ -10,87 +11,137 @@ import {
   Textarea,
   RadioGroup,
   Radio,
-  Button
+  Button,
+  Drawer,
+  DrawerOverlay,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  DrawerContent,
+  DrawerFooter
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import { BiSend } from 'react-icons/bi'
+import { useState, useRef } from 'react'
 
 export default function NoteContainer() {
-  const [value, setValue] = useState('1')
+  const [value, setValue] = useState('')
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const btnRef = useRef()
   return (
-    <Flex>
-      <Box
-        bg={'blue.700'}
-        rounded={'lg'}
-        boxShadow={'lg'}
-        p={7}
-        marginLeft={'25rem'}
-        marginTop={3}
-        justifyContent={'center'}
+    <>
+      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+        NOVO
+      </Button>
+      <Drawer
+        isOpen={isOpen}
+        placement="bottom"
+        onClose={onClose}
+        finalFocusRef={btnRef}
       >
-        <FormControl id="name">
-          <FormLabel>Nome</FormLabel>
-          <Input />
-        </FormControl>
-        <FormControl id="date">
-          <FormLabel>Data Nascimento</FormLabel>
-          <Input type="date" />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Frequencia Cardiaca</FormLabel>
-          <Input type="text" />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Sintomas</FormLabel>
-          <CheckboxGroup
-            colorScheme="green"
-            defaultValue={['naruto', 'kakashi']}
-          >
-            <Stack spacing={[1, 5]} direction={['column', 'row']}>
-              <Checkbox value="">Dor de cabeça</Checkbox>
-              <Checkbox value="">Dor de garganta</Checkbox>
-              <Checkbox value="">Corisa</Checkbox>
-              <Checkbox value="">Tosse</Checkbox>
-              <Checkbox value="">Falta de ar</Checkbox>
-            </Stack>
-          </CheckboxGroup>
-        </FormControl>
-        <FormControl>
-          <FormLabel>Descrição de possivel causa</FormLabel>
-          <Textarea type="text" />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Classificação</FormLabel>
-          <RadioGroup onChange={setValue} value={value}>
-            <Stack direction="row">
-              <Radio value="1">Vermelho</Radio>
-              <Radio value="2">Laranja</Radio>
-              <Radio value="3">Amarelo</Radio>
-              <Radio value="4">Verde</Radio>
-              <Radio value="5">Azul</Radio>
-            </Stack>
-          </RadioGroup>
-        </FormControl>
-        <Stack mt={8} direction={'row'} spacing={4}>
-          <Button
-            flex={1}
-            fontSize={'sm'}
-            rounded={'full'}
-            bg={'blue.400'}
-            color={'white'}
-            boxShadow={
-              '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
-            }
-            _hover={{
-              bg: 'blue.500'
-            }}
-            _focus={{
-              bg: 'blue.500'
-            }}
-          >
-            REGISTRAR
-          </Button>
-        </Stack>
-      </Box>
-    </Flex>
+        <DrawerOverlay />
+        <DrawerContent bg={'gray.800'}>
+          <DrawerCloseButton color={'gray.100'} />
+          <DrawerHeader color={'gray.100'} textAlign={'center'}>
+            Triagem Médica
+          </DrawerHeader>
+
+          <DrawerBody>
+            <Flex minH={'100vh'} justify={'center'}>
+              <Box
+                bg={'gray.900'}
+                rounded={'lg'}
+                boxShadow={'lg'}
+                p={7}
+                width={'100vw'}
+                maxWidth={{ lg: '50%', md: '60%', base: '92%' }}
+              >
+                <Stack spacing={4}>
+                  <FormControl id="name">
+                    <FormLabel>Nome</FormLabel>
+                    <Input />
+                  </FormControl>
+                  <FormControl id="date">
+                    <FormLabel>Data Nascimento</FormLabel>
+                    <Input type="date" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Frequencia Cardiaca</FormLabel>
+                    <Input type="text" />
+                  </FormControl>
+                  <Stack
+                    direction={{ base: 'column', sm: 'row' }}
+                    align={'start'}
+                    justify={'space-between'}
+                  >
+                    <FormControl>
+                      <FormLabel>Sintomas</FormLabel>
+                      <CheckboxGroup colorScheme="yellow">
+                        <Stack spacing={[1, 2]} direction={['column', 'row']}>
+                          <Checkbox value="">Dor de cabeça</Checkbox>
+                          <Checkbox value="">Dor de garganta</Checkbox>
+                          <Checkbox value="">Corisa</Checkbox>
+                          <Checkbox value="">Tosse</Checkbox>
+                          <Checkbox value="">Falta de ar</Checkbox>
+                        </Stack>
+                      </CheckboxGroup>
+                    </FormControl>
+                  </Stack>
+                  <FormControl>
+                    <FormLabel>Descrição de possivel causa</FormLabel>
+                    <Textarea type="text" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Classificação</FormLabel>
+                    <RadioGroup onChange={setValue} value={value}>
+                      <Stack direction={{ lg: 'row', base: 'column' }}>
+                        <Radio value="1" colorScheme={'red'}>
+                          Vermelho
+                        </Radio>
+                        <Radio value="2" colorScheme={'orange'}>
+                          Laranja
+                        </Radio>
+                        <Radio value="3" colorScheme={'yellow'}>
+                          Amarelo
+                        </Radio>
+                        <Radio value="4" colorScheme={'green'}>
+                          Verde
+                        </Radio>
+                        <Radio value="5" colorScheme={'blue'}>
+                          Azul
+                        </Radio>
+                      </Stack>
+                    </RadioGroup>
+                  </FormControl>
+                </Stack>
+                <Stack mt={8} direction={'row'} spacing={4}>
+                  <Button
+                    flex={1}
+                    rightIcon={<BiSend />}
+                    fontSize={{ base: '15px', md: '17px', lg: '20px' }}
+                    rounded={'full'}
+                    bg={'yellow.400'}
+                    color={'gray.900'}
+                    boxShadow={
+                      '0px 1px 25px -5px rgb(247 244 3 / 48%), 0 10px 10px -5px rgb(247 244 3 / 43%)'
+                    }
+                    _hover={{
+                      bg: 'yellow.500'
+                    }}
+                    _focus={{
+                      bg: 'yellow.500'
+                    }}
+                  >
+                    REGISTRAR
+                  </Button>
+                </Stack>
+              </Box>
+            </Flex>
+          </DrawerBody>
+
+          <DrawerFooter></DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </>
   )
 }

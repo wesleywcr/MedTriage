@@ -6,9 +6,7 @@ import {
   Stack,
   HStack,
   Circle,
-  Link,
-  Badge,
-  useColorModeValue
+  Badge
 } from '@chakra-ui/react'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 export default function Card() {
@@ -26,43 +24,34 @@ export default function Card() {
         <Heading fontSize={'2xl'} fontFamily={'body'}>
           NOME
         </Heading>
-
-        <Text
+        <Stack
           textAlign={'center'}
-          color={useColorModeValue('gray.700', 'gray.400')}
+          color={'gray.100'}
           px={3}
+          fontWeight={900}
+          marginTop={2}
         >
-          Actress, musician, songwriter and artist. PM for work inquires or{' '}
-          <Link href={'#'} color={'blue.400'}>
-            #tag
-          </Link>{' '}
-          me in your posts
-        </Text>
-
+          <Text>{` Frequência Cardíaca: bpm`}</Text>
+          <Text> {`Pressão Arterial:  `}</Text>
+          <Text> {` Temperatura: °C `}</Text>
+          <Text> {`Sintomas:  `}</Text>
+        </Stack>
+        <Stack>
+          <Heading fontSize={'2xl'}>Descrição</Heading>
+          <Text>{`Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+          Dicta eaque quasi perspiciatis facilis recusandae quaerat numquam 
+          fugit ipsam iusto nisi repellat hic accusamus qui obcaecati, 
+          enim debitis voluptate. Error, non?`}</Text>
+        </Stack>
         <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
           <Badge
             px={2}
             py={1}
-            bg={useColorModeValue('gray.500', 'gray.800')}
+            bg={'red.900'}
             fontWeight={'400'}
+            color={'gray.100'}
           >
-            #art
-          </Badge>
-          <Badge
-            px={2}
-            py={1}
-            bg={useColorModeValue('gray.50', 'gray.800')}
-            fontWeight={'400'}
-          >
-            #photography
-          </Badge>
-          <Badge
-            px={2}
-            py={1}
-            bg={useColorModeValue('gray.50', 'gray.800')}
-            fontWeight={'400'}
-          >
-            #music
+            {`   `}
           </Badge>
         </Stack>
 

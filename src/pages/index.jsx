@@ -6,9 +6,8 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <Flex minH={'100vh'} align={'center'} justify={'center'}>
-        <NoteContainer />
-      </Flex>
+      <NoteContainer />
+      <Flex minH={'100vh'} align={'center'} justify={'center'}></Flex>
       <Card />
     </>
   )

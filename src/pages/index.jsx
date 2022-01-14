@@ -2,6 +2,7 @@ import Card from '../components/Card/Card'
 import Navbar from '../components/Navbar/Navbar'
 import NoteContainer from '../components/NoteContainer/NoteContainer'
 import { Flex, Grid } from '@chakra-ui/react'
+import Footer from 'components/Footer/Footer'
 export default function Home() {
   return (
     <>
@@ -16,6 +17,7 @@ export default function Home() {
       >
         <Card />
       </Grid>
+      <Footer />
     </>
   )
 }

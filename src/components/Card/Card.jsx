@@ -9,7 +9,29 @@ import {
   Badge
 } from '@chakra-ui/react'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
-export default function Card() {
+export default function Card(props) {
+  let colorClassification =
+    props.classification === 5
+      ? 'red.900'
+      : props.classification === 4
+      ? 'orange.900'
+      : props.classification === 3
+      ? 'yellow.500'
+      : props.classification === 2
+      ? 'green.800'
+      : 'blue.500'
+
+  let stringClassification =
+    props.classification === 5
+      ? 'VERMELHO'
+      : props.classification === 4
+      ? 'LARANJA'
+      : props.classification === 3
+      ? 'AMARELO'
+      : props.classification === 2
+      ? 'VERDE'
+      : 'AZUL'
+
   return (
     <Center py={6}>
       <Box
@@ -22,7 +44,7 @@ export default function Card() {
         textAlign={'center'}
       >
         <Heading fontSize={'2xl'} fontFamily={'body'}>
-          NOME
+          {props.name}
         </Heading>
         <Stack
           textAlign={'center'}
@@ -31,27 +53,24 @@ export default function Card() {
           fontWeight={900}
           marginTop={2}
         >
-          <Text>{` Frequência Cardíaca: bpm`}</Text>
-          <Text> {`Pressão Arterial:  `}</Text>
-          <Text> {` Temperatura: °C `}</Text>
-          <Text> {`Sintomas:  `}</Text>
+          <Text>{` Frequência Cardíaca :${props.frequency} bpm`}</Text>
+          <Text> {`Pressão Arterial: ${props.pressure} `}</Text>
+          <Text> {` Temperatura: ${props.temperature}°C `}</Text>
+          <Text> {`Sintomas: ${props.symptoms} `}</Text>
         </Stack>
         <Stack>
           <Heading fontSize={'2xl'}>Descrição</Heading>
-          <Text>{`Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-          Dicta eaque quasi perspiciatis facilis recusandae quaerat numquam 
-          fugit ipsam iusto nisi repellat hic accusamus qui obcaecati, 
-          enim debitis voluptate. Error, non?`}</Text>
+          <Text>{`${props.description}`}</Text>
         </Stack>
         <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
           <Badge
             px={2}
             py={1}
-            bg={'red.900'}
+            bg={colorClassification}
             fontWeight={'400'}
             color={'gray.100'}
           >
-            {`Vermelho`}
+            {stringClassification}
           </Badge>
         </Stack>
 

@@ -51,7 +51,7 @@ export default function Card() {
             fontWeight={'400'}
             color={'gray.100'}
           >
-            {`   `}
+            {`Vermelho`}
           </Badge>
         </Stack>
 
@@ -59,7 +59,7 @@ export default function Card() {
           <Circle size="40px" bg="tomato" color="white">
             <DeleteIcon />
           </Circle>
-          <Circle size="40px" bg="tomato" color="white">
+          <Circle size="40px" bg="blue.500" color="white">
             <EditIcon />
           </Circle>
         </HStack>

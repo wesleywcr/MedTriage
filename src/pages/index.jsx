@@ -1,14 +1,21 @@
 import Card from '../components/Card/Card'
 import Navbar from '../components/Navbar/Navbar'
 import NoteContainer from '../components/NoteContainer/NoteContainer'
-import { Flex } from '@chakra-ui/react'
+import { Flex, Grid } from '@chakra-ui/react'
 export default function Home() {
   return (
     <>
       <Navbar />
-      <NoteContainer />
-      <Flex minH={'100vh'} align={'center'} justify={'center'}></Flex>
-      <Card />
+
+      <Flex marginTop={'2rem'} align={'center'} justify={'center'}>
+        <NoteContainer />
+      </Flex>
+      <Grid
+        templateColumns={{ lg: 'repeat(3, 1fr)', base: 'repeat(1, 1fr)' }}
+        gap={2}
+      >
+        <Card />
+      </Grid>
     </>
   )
 }

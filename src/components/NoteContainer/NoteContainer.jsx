@@ -18,10 +18,12 @@ import {
   DrawerHeader,
   DrawerBody,
   DrawerContent,
-  DrawerFooter
+  DrawerFooter,
+  Circle
 } from '@chakra-ui/react'
 import { BiSend } from 'react-icons/bi'
 import { useState, useRef } from 'react'
+import { AddIcon } from '@chakra-ui/icons'
 
 export default function NoteContainer() {
   const [value, setValue] = useState('')
@@ -30,9 +32,18 @@ export default function NoteContainer() {
   const btnRef = useRef()
   return (
     <>
-      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-        NOVO
-      </Button>
+      <Circle
+        ref={btnRef}
+        bg={'yellow.500'}
+        size="50px"
+        onClick={onOpen}
+        _hover={{
+          bg: 'yellow.200',
+          color: 'gray.900'
+        }}
+      >
+        <AddIcon />
+      </Circle>
       <Drawer
         isOpen={isOpen}
         placement="bottom"
@@ -62,11 +73,11 @@ export default function NoteContainer() {
                     <Input />
                   </FormControl>
                   <FormControl id="date">
-                    <FormLabel>Data Nascimento</FormLabel>
-                    <Input type="date" />
+                    <FormLabel>Temperrtura:</FormLabel>
+                    <Input type="numeber" />
                   </FormControl>
                   <FormControl>
-                    <FormLabel>Frequencia Cardiaca</FormLabel>
+                    <FormLabel>Frequência Cardíaca</FormLabel>
                     <Input type="text" />
                   </FormControl>
                   <Stack
@@ -75,7 +86,7 @@ export default function NoteContainer() {
                     justify={'space-between'}
                   >
                     <FormControl>
-                      <FormLabel>Sintomas</FormLabel>
+                      <FormLabel>Sintomas: </FormLabel>
                       <CheckboxGroup colorScheme="yellow">
                         <Stack spacing={[1, 2]} direction={['column', 'row']}>
                           <Checkbox value="">Dor de cabeça</Checkbox>
@@ -88,11 +99,11 @@ export default function NoteContainer() {
                     </FormControl>
                   </Stack>
                   <FormControl>
-                    <FormLabel>Descrição de possivel causa</FormLabel>
+                    <FormLabel>Descrição de possivel causa: </FormLabel>
                     <Textarea type="text" />
                   </FormControl>
                   <FormControl>
-                    <FormLabel>Classificação</FormLabel>
+                    <FormLabel>Classificação: </FormLabel>
                     <RadioGroup onChange={setValue} value={value}>
                       <Stack direction={{ lg: 'row', base: 'column' }}>
                         <Radio value="1" colorScheme={'red'}>

@@ -24,12 +24,51 @@ import {
 import { BiSend } from 'react-icons/bi'
 import { useState, useRef } from 'react'
 import { AddIcon } from '@chakra-ui/icons'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 export default function NoteContainer() {
-  const [value, setValue] = useState('')
-
+  const [value, setValue] = useState()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef()
+
+  const [inputName, setInputName] = useState('')
+  const [inputFrequency, setInputFrequency] = useState('')
+  const [inputPressure, setInputPressure] = useState('')
+  const [inputTemperature, setInputTemperature] = useState('')
+  const [checkSymptoms, setCheckSymptoms] = useState('')
+  const [inputDescription, setInputDescription] = useState('')
+
+  //refresh
+  const router = useRouter()
+  const refreshData = () => {
+    router.replace(router.asPath)
+  }
+
+  async function createNote() {
+    const { data } = await axios.post('http://localhost:3333/notes', {
+      name: inputName,
+      temperature: inputTemperature,
+      frequency: inputFrequency,
+      pressure: inputPressure,
+      symptoms: checkSymptoms,
+      description: inputDescription,
+      classification: value
+    })
+
+    setInputName('')
+    setInputTemperature('')
+    setInputFrequency('')
+    setInputPressure('')
+    setInputDescription('')
+    setCheckSymptoms('')
+    setValue()
+
+    if (data.status < 300) {
+      refreshData()
+    }
+    onClose()
+  }
   return (
     <>
       <Circle
@@ -70,15 +109,42 @@ export default function NoteContainer() {
                 <Stack spacing={4}>
                   <FormControl id="name">
                     <FormLabel>Nome</FormLabel>
-                    <Input />
+                    <Input
+                      value={inputName}
+                      onChange={(event) => {
+                        setInputName(event.target.value)
+                      }}
+                    />
                   </FormControl>
-                  <FormControl id="date">
-                    <FormLabel>Temperrtura:</FormLabel>
-                    <Input type="numeber" />
+                  <FormControl id="temp">
+                    <FormLabel>Temperatura:</FormLabel>
+                    <Input
+                      value={inputTemperature}
+                      onChange={(event) => {
+                        setInputTemperature(event.target.value)
+                      }}
+                      type="number"
+                    />
                   </FormControl>
                   <FormControl>
                     <FormLabel>Frequência Cardíaca</FormLabel>
-                    <Input type="text" />
+                    <Input
+                      value={inputFrequency}
+                      onChange={(event) => {
+                        setInputFrequency(event.target.value)
+                      }}
+                      type="number"
+                    />
+                  </FormControl>
+                  <FormControl id="pressão">
+                    <FormLabel>Pressão:</FormLabel>
+                    <Input
+                      value={inputPressure}
+                      onChange={(event) => {
+                        setInputPressure(event.target.value)
+                      }}
+                      type="text"
+                    />
                   </FormControl>
                   <Stack
                     direction={{ base: 'column', sm: 'row' }}
@@ -87,20 +153,37 @@ export default function NoteContainer() {
                   >
                     <FormControl>
                       <FormLabel>Sintomas: </FormLabel>
-                      <CheckboxGroup colorScheme="yellow">
-                        <Stack spacing={[1, 2]} direction={['column', 'row']}>
-                          <Checkbox value="">Dor de cabeça</Checkbox>
-                          <Checkbox value="">Dor de garganta</Checkbox>
-                          <Checkbox value="">Corisa</Checkbox>
-                          <Checkbox value="">Tosse</Checkbox>
-                          <Checkbox value="">Falta de ar</Checkbox>
+                      <CheckboxGroup
+                        colorScheme="yellow"
+                        onChange={setCheckSymptoms}
+                      >
+                        <Stack
+                          value={checkSymptoms}
+                          spacing={[1, 2]}
+                          direction={['column', 'row']}
+                        >
+                          <Checkbox value="Dor de cabeça">
+                            Dor de cabeça
+                          </Checkbox>
+                          <Checkbox value="Dor de garganta">
+                            Dor de garganta
+                          </Checkbox>
+                          <Checkbox value="Corisa">Corisa</Checkbox>
+                          <Checkbox value="Tosse">Tosse</Checkbox>
+                          <Checkbox value="Falta de ar">Falta de ar</Checkbox>
                         </Stack>
                       </CheckboxGroup>
                     </FormControl>
                   </Stack>
                   <FormControl>
                     <FormLabel>Descrição de possivel causa: </FormLabel>
-                    <Textarea type="text" />
+                    <Textarea
+                      value={inputDescription}
+                      onChange={(event) => {
+                        setInputDescription(event.target.value)
+                      }}
+                      type="text"
+                    />
                   </FormControl>
                   <FormControl>
                     <FormLabel>Classificação: </FormLabel>
@@ -142,6 +225,7 @@ export default function NoteContainer() {
                     _focus={{
                       bg: 'yellow.500'
                     }}
+                    onClick={createNote}
                   >
                     REGISTRAR
                   </Button>

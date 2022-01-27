@@ -21,9 +21,10 @@ export default function Home({note}) {
       
      
          {note?.map((data) => {
-           return(
-            <Card
+          return(
+             <Card
               key={data.id}
+              id={data.id}
               name={data.name}
               frequency={data.frequency}
               pressure={data.pressure}
@@ -31,9 +32,11 @@ export default function Home({note}) {
               symptoms={data.symptoms}
               description={data.description}
               classification={data.classification}
+              
             />
            )
           })} 
+      
       
       </Grid>
       <Footer />
@@ -41,15 +44,15 @@ export default function Home({note}) {
   )
 }
 
-export async function getStaticProps() {
-  // const { id } = context.params
+export async function getServerSideProps() {
+
   const response = await fetch('http://localhost:3333/notes')
   const data = await response.json()
- 
+
   return {
     props: {
       note: data
-    },
-    revalidate: 10
+    }
+
   }
 }

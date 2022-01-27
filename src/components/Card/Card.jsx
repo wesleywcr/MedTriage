@@ -9,26 +9,42 @@ import {
   Badge
 } from '@chakra-ui/react'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
+import axios from 'axios'
+
+import { useRouter } from 'next/router'
 export default function Card(props) {
+  //refresh
+  const router = useRouter()
+  const refreshData = () => {
+    router.replace(router.asPath)
+  }
+
+  async function deleteNote() {
+    const res = await axios.delete(`http://localhost:3333/notes/${props.id}`)
+    if (res.status < 300) {
+      refreshData()
+    }
+  }
+
   let colorClassification =
-    props.classification === 5
+    props.classification === '1'
       ? 'red.900'
-      : props.classification === 4
+      : props.classification === '2'
       ? 'orange.900'
-      : props.classification === 3
+      : props.classification === '3'
       ? 'yellow.500'
-      : props.classification === 2
+      : props.classification === '4'
       ? 'green.800'
       : 'blue.500'
 
   let stringClassification =
-    props.classification === 5
+    props.classification === '1'
       ? 'VERMELHO'
-      : props.classification === 4
+      : props.classification === '2'
       ? 'LARANJA'
-      : props.classification === 3
+      : props.classification === '3'
       ? 'AMARELO'
-      : props.classification === 2
+      : props.classification === '4'
       ? 'VERDE'
       : 'AZUL'
 
@@ -75,7 +91,7 @@ export default function Card(props) {
         </Stack>
 
         <HStack mt={8} direction={'row'} spacing={4}>
-          <Circle size="40px" bg="tomato" color="white">
+          <Circle size="40px" bg="tomato" color="white" onClick={deleteNote}>
             <DeleteIcon />
           </Circle>
           <Circle size="40px" bg="blue.500" color="white">

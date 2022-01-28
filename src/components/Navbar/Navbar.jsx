@@ -2,30 +2,28 @@ import {
   Box,
   Flex,
   HStack,
+  Heading,
   Link,
   IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
   useDisclosure,
-  Stack
+  Stack,
+  Spacer
 } from '@chakra-ui/react'
 
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 
-const Links = ['Dashboard', 'Projects', 'Team']
+const Links = ['Usuário', 'Configurações', 'Time']
 
 const NavLink = ({ children }) => (
   <Link
-    px={2}
+    width={'9rem'}
+    px={'10px'}
     py={1}
     rounded={'md'}
     _hover={{
       textDecoration: 'none',
-      bg: 'gray.200'
+      bg: 'gray.800',
+      color: 'yellow.700'
     }}
     href={'#'}
   >
@@ -38,45 +36,30 @@ export default function Navbar() {
 
   return (
     <>
-      <Box bg={'purple.700'} px={4}>
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+      <Box bg={'gray.700'}>
+        <Flex h={16} alignItems={'center'} justifyContent={'ce'}>
           <IconButton
-            bg={'purple.700'}
+            bg={'gray.700'}
             size={'md'}
+            alignContent={'flex-end'}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={'Open Menu'}
             display={{ md: 'none' }}
             onClick={isOpen ? onClose : onOpen}
           />
+          <Spacer />
           <HStack spacing={8} alignItems={'center'}>
-            <Box>Logo</Box>
-            <HStack
-              as={'nav'}
-              spacing={4}
-              display={{ base: 'none', md: 'flex' }}
-            >
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </HStack>
+            <Box>
+              <Heading
+                as="h1"
+                color={'yellow.700'}
+                textShadow={'1.5px 1.5px 1.5px #000'}
+              >
+                Med Triage
+              </Heading>
+            </Box>
           </HStack>
-          <Flex alignItems={'center'}>
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={'full'}
-                variant={'link'}
-                cursor={'pointer'}
-                minW={0}
-              ></MenuButton>
-              <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
-              </MenuList>
-            </Menu>
-          </Flex>
+          <Spacer />
         </Flex>
 
         {isOpen ? (

@@ -1,6 +1,7 @@
 import {
   Box,
   chakra,
+  Circle,
   Container,
   Heading,
   Stack,
@@ -35,7 +36,7 @@ const SocialButton = ({ children, label, href }) => {
 
 export default function Footer() {
   return (
-    <Box bg="gray.50" color="gray.700">
+    <Box bg="yellow.700" color="gray.800">
       <Container
         as={Stack}
         maxW={'6xl'}
@@ -45,18 +46,47 @@ export default function Footer() {
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}
       >
-        <Heading as="h1">Med Triage</Heading>
+        <Heading as="h1" textShadow={'1.5px 1.5px 1.5px #e7e7e7'}>
+          Med Triage
+        </Heading>
         <Text>© 2022 Wesleywcr All rights reserved</Text>
         <Stack direction={'row'} spacing={6}>
-          <SocialButton label={'Twitter'} href={'#'}>
-            <FaTwitter />
-          </SocialButton>
-          <SocialButton label={'YouTube'} href={'#'}>
-            <FaYoutube />
-          </SocialButton>
-          <SocialButton label={'Instagram'} href={'#'}>
-            <FaInstagram />
-          </SocialButton>
+          <Circle
+            bg={'yellow.400'}
+            boxShadow={'dark-lg'}
+            _hover={{
+              bg: 'gray.50',
+              color: 'blue.600'
+            }}
+          >
+            <SocialButton label={'Twitter'} href={'#'}>
+              <FaTwitter />
+            </SocialButton>
+          </Circle>
+          <Circle
+            bg={'yellow.400'}
+            boxShadow={'dark-lg'}
+            _hover={{
+              bg: 'gray.50',
+              color: 'red.600'
+            }}
+          >
+            <SocialButton label={'YouTube'} href={'#'}>
+              <FaYoutube />
+            </SocialButton>
+          </Circle>
+          <Circle
+            bg={'yellow.400'}
+            boxShadow={'dark-lg'}
+            _hover={{
+              bg: 'gray.50',
+              color: 'pink.600'
+            }}
+          >
+            <SocialButton label={'Instagram'} href={'#'}>
+              <FaInstagram />
+            </SocialButton>
+          </Circle>
         </Stack>
       </Container>
     </Box>

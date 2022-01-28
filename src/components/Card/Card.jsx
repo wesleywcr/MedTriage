@@ -12,6 +12,7 @@ import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import axios from 'axios'
 
 import { useRouter } from 'next/router'
+
 export default function Card(props) {
   //refresh
   const router = useRouter()
@@ -69,14 +70,19 @@ export default function Card(props) {
           fontWeight={900}
           marginTop={2}
         >
-          <Text>{` Frequência Cardíaca :${props.frequency} bpm`}</Text>
+          <Text>{` Frequência Cardíaca :`}</Text>
+          <Text
+            fontSize={'md'}
+            fontWeight={400}
+          >{`${props.frequency} bpm`}</Text>
           <Text> {`Pressão Arterial: ${props.pressure} `}</Text>
+
           <Text> {` Temperatura: ${props.temperature}°C `}</Text>
           <Text> {`Sintomas: ${props.symptoms} `}</Text>
         </Stack>
         <Stack>
           <Heading fontSize={'2xl'}>Descrição</Heading>
-          <Text>{`${props.description}`}</Text>
+          <Text fontSize={'md'} fontWeight={400}>{`${props.description}`}</Text>
         </Stack>
         <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
           <Badge

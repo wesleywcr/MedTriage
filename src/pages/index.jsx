@@ -4,10 +4,24 @@ import Navbar from '../components/Navbar/Navbar'
 import NoteContainer from '../components/NoteContainer/NoteContainer'
 import { Flex, Grid } from '@chakra-ui/react'
 import Footer from 'components/Footer/Footer'
+import { useState,useCallback} from 'react'
+
+import update from 'immutability-helper';
 
 export default function Home({note}) {
+  const [cards, setCards] = useState([])
+
+  const moveCard = useCallback((dragIndex, hoverIndex) => {
+    const dragCard = cards[dragIndex];
+    setCards(update(cards, {
+        $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, dragCard],
+        ],
+    }));
+}, [cards]);
   return (
-    <>
+    < >
     
       <Navbar />
 
@@ -20,7 +34,7 @@ export default function Home({note}) {
       >
       
      
-         {note?.map((data) => {
+         {note?.map((data,index) => {
           return(
              <Card
               key={data.id}
@@ -32,6 +46,8 @@ export default function Home({note}) {
               symptoms={data.symptoms}
               description={data.description}
               classification={data.classification}
+              moveCard={moveCard}
+              index={index}
               
             />
            )

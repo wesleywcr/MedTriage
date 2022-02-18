@@ -12,6 +12,7 @@ import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import axios from 'axios'
 
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 export default function Card(props) {
   //refresh
@@ -101,7 +102,9 @@ export default function Card(props) {
             <DeleteIcon />
           </Circle>
           <Circle size="40px" bg="blue.500" color="white">
-            <EditIcon />
+            <Link href={`/edit/${props.id}`}>
+              <EditIcon />
+            </Link>
           </Circle>
         </HStack>
       </Box>

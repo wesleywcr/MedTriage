@@ -5,7 +5,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint src --max-warnings=0",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*": [
+      "yarn lint -- --fix"
+    ]
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
@@ -15,6 +26,7 @@
     "axios": "^0.24.0",
     "eslint-plugin-react": "^7.28.0",
     "framer-motion": "^5",
+    "lint-staged": "^12.3.4",
     "next": "12.0.8",
     "prettier": "^2.5.1",
     "react": "17.0.2",
@@ -25,6 +37,7 @@
     "eslint": "8.6.0",
     "eslint-config-next": "12.0.8",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0"
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4"
   }
 }

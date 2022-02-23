@@ -9,10 +9,9 @@ import {
   Badge
 } from '@chakra-ui/react'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
-import axios from 'axios'
-
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import axios from 'axios'
 
 export default function Card(props) {
   //refresh

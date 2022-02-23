@@ -28,10 +28,10 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 
 export default function NoteContainer() {
-  const [value, setValue] = useState()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef()
 
+  const [valueClassification, setValueClassification] = useState()
   const [inputName, setInputName] = useState('')
   const [inputFrequency, setInputFrequency] = useState('')
   const [inputPressure, setInputPressure] = useState('')
@@ -53,7 +53,7 @@ export default function NoteContainer() {
       pressure: inputPressure,
       symptoms: checkSymptoms,
       description: inputDescription,
-      classification: value
+      classification: valueClassification
     })
 
     setInputName('')
@@ -62,7 +62,7 @@ export default function NoteContainer() {
     setInputPressure('')
     setInputDescription('')
     setCheckSymptoms('')
-    setValue()
+    setValueClassification()
 
     if (data.status < 300) {
       refreshData()
@@ -187,7 +187,10 @@ export default function NoteContainer() {
                   </FormControl>
                   <FormControl>
                     <FormLabel>Classificação: </FormLabel>
-                    <RadioGroup onChange={setValue} value={value}>
+                    <RadioGroup
+                      value={valueClassification}
+                      onChange={setValueClassification}
+                    >
                       <Stack direction={{ lg: 'row', base: 'column' }}>
                         <Radio value="1" colorScheme={'red'}>
                           Vermelho

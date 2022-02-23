@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar/Navbar'
 import NoteContainer from '../components/NoteContainer/NoteContainer'
 import { Flex, Grid } from '@chakra-ui/react'
 import Footer from 'components/Footer/Footer'
+import axios from 'axios'
 
 export default function Home({note}) {
   return (
@@ -46,8 +47,8 @@ export default function Home({note}) {
 
 export async function getServerSideProps() {
 
-  const response = await fetch('http://localhost:3333/notes')
-  const data = await response.json()
+  const response = await axios.get('http://localhost:3333/notes')
+  const data = await response.data
 
   return {
     props: {

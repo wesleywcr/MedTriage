@@ -1,4 +1,3 @@
-import { AddIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
@@ -18,35 +17,53 @@ import {
   Radio,
   RadioGroup,
   Stack,
-  Text,
   Textarea,
   useDisclosure
 } from '@chakra-ui/react'
-import axios from 'axios'
-import { useRouter } from 'next/router'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { BiSend } from 'react-icons/bi'
 
-export default function NoteContainer() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+import axios from 'axios'
+import { useRouter } from 'next/router'
+
+export default function Edit({ note }) {
+  console.log('Data', note)
+
+  const { onOpen } = useDisclosure()
   const btnRef = useRef()
 
+  const router = useRouter()
+  const { id } = router.query
+
   const [valueClassification, setValueClassification] = useState()
+
   const [inputName, setInputName] = useState('')
   const [inputFrequency, setInputFrequency] = useState('')
   const [inputPressure, setInputPressure] = useState('')
   const [inputTemperature, setInputTemperature] = useState('')
-  const [checkSymptoms, setCheckSymptoms] = useState('')
+  const [checkSymptoms, setCheckSymptoms] = useState([])
   const [inputDescription, setInputDescription] = useState('')
 
-  //refresh
-  const router = useRouter()
-  const refreshData = () => {
-    router.replace(router.asPath)
-  }
+  useEffect(() => {
+    setInputName(note.name)
+    setInputTemperature(note.temperature)
+    setInputFrequency(note.frequency)
+    setInputPressure(note.pressure)
+    setInputDescription(note.description)
+    setCheckSymptoms(note.symptoms)
+    setValueClassification(note.classification)
+  }, [
+    note.symptoms,
+    note.description,
+    note.frequency,
+    note.name,
+    note.pressure,
+    note.temperature,
+    note.classification
+  ])
 
-  async function createNote() {
-    const { data } = await axios.post('http://localhost:3333/notes', {
+  async function editNote() {
+    await axios.put(`http://localhost:3333/notes/${id}`, {
       name: inputName,
       temperature: inputTemperature,
       frequency: inputFrequency,
@@ -56,39 +73,15 @@ export default function NoteContainer() {
       classification: valueClassification
     })
 
-    setInputName('')
-    setInputTemperature('')
-    setInputFrequency('')
-    setInputPressure('')
-    setInputDescription('')
-    setCheckSymptoms('')
-    setValueClassification()
-
-    if (data.status < 300) {
-      refreshData()
-    }
-    onClose()
+    router.back()
   }
+
   return (
     <>
-      <Button
-        ref={btnRef}
-        colorScheme={'white.500'}
-        bg={'yellow.500'}
-        rounded={'full'}
-        onClick={onOpen}
-        _hover={{
-          bg: 'yellow.200',
-          color: 'gray.900'
-        }}
-      >
-        <AddIcon />
-        <Text marginLeft={2}>Nova Ficha</Text>
-      </Button>
       <Drawer
-        isOpen={isOpen}
+        isOpen={onOpen}
         placement="bottom"
-        onClose={onClose}
+        onClose={() => router.back()}
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
@@ -111,7 +104,9 @@ export default function NoteContainer() {
                 <Stack spacing={4}>
                   <FormControl id="name">
                     <FormLabel>Nome</FormLabel>
+
                     <Input
+                      name={'name'}
                       value={inputName}
                       onChange={(event) => {
                         setInputName(event.target.value)
@@ -155,10 +150,13 @@ export default function NoteContainer() {
                   >
                     <FormControl>
                       <FormLabel>Sintomas: </FormLabel>
+
                       <CheckboxGroup
                         colorScheme="yellow"
+                        defaultValue={note.symptoms}
                         onChange={setCheckSymptoms}
                       >
+                        {console.log('sintomas', note.symptoms)}
                         <Stack
                           value={checkSymptoms}
                           spacing={[1, 2]}
@@ -190,7 +188,7 @@ export default function NoteContainer() {
                   <FormControl>
                     <FormLabel>Classificação: </FormLabel>
                     <RadioGroup
-                      value={valueClassification}
+                      defaultValue={note.classification}
                       onChange={setValueClassification}
                     >
                       <Stack direction={{ lg: 'row', base: 'column' }}>
@@ -230,9 +228,9 @@ export default function NoteContainer() {
                     _focus={{
                       bg: 'yellow.500'
                     }}
-                    onClick={createNote}
+                    onClick={editNote}
                   >
-                    REGISTRAR
+                    EDITAR
                   </Button>
                 </Stack>
               </Box>
@@ -244,4 +242,15 @@ export default function NoteContainer() {
       </Drawer>
     </>
   )
+}
+
+export async function getServerSideProps({ params }) {
+  const response = await axios.get(`http://localhost:3333/notes/${params.id}`)
+  const data = await response.data
+
+  return {
+    props: {
+      note: data
+    }
+  }
 }

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import Card from '../components/Card/Card'
 import Navbar from '../components/Navbar/Navbar'
 import NoteContainer from '../components/NoteContainer/NoteContainer'
@@ -6,10 +5,9 @@ import { Flex, Grid } from '@chakra-ui/react'
 import Footer from 'components/Footer/Footer'
 import axios from 'axios'
 
-export default function Home({note}) {
+export default function Home({ note }) {
   return (
     <>
-    
       <Navbar />
 
       <Flex marginTop={'2rem'} align={'center'} justify={'center'}>
@@ -19,11 +17,9 @@ export default function Home({note}) {
         templateColumns={{ lg: 'repeat(3, 1fr)', base: 'repeat(1, 1fr)' }}
         gap={2}
       >
-      
-     
-         {note?.map((data) => {
-          return(
-             <Card
+        {note?.map((data) => {
+          return (
+            <Card
               key={data.id}
               id={data.id}
               name={data.name}
@@ -33,12 +29,9 @@ export default function Home({note}) {
               symptoms={data.symptoms}
               description={data.description}
               classification={data.classification}
-              
             />
-           )
-          })} 
-      
-      
+          )
+        })}
       </Grid>
       <Footer />
     </>
@@ -46,7 +39,6 @@ export default function Home({note}) {
 }
 
 export async function getServerSideProps() {
-
   const response = await axios.get('http://localhost:3333/notes')
   const data = await response.data
 
@@ -54,6 +46,5 @@ export async function getServerSideProps() {
     props: {
       note: data
     }
-
   }
 }

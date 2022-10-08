@@ -14,7 +14,7 @@
 
 # 📕 About
 
-✍️ MedTriage is project for you to create your personal goals.
+✍️ MedTriage is project for you to create your medical records.
 </br>
 
 # 🛠️Technologies

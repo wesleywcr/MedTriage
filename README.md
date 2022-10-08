@@ -21,7 +21,7 @@
 
 This project was made using the follow technologies:
 
-- [TypeScript](https://www.typescriptlang.org/)
+- [Prisma](https://www.prisma.io/)
 - [React](https://reactjs.org)
 - [NextJS](https://nextjs.org/)
 - [Chakra UI](https://chakra-ui.com/)
@@ -32,6 +32,11 @@ This project was made using the follow technologies:
 - Mobile responsive.
 
 # 🏃Getting Started
+
+```sh
+# Clone API
+$ git clone https://github.com/wesleywcr/MedTriage-api
+```
 
 ```sh
 #  Clone Repository
